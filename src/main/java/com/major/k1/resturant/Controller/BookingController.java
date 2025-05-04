@@ -39,6 +39,14 @@ public class BookingController {
     }
 
     // STEP 2: Confirm booking after Razorpay success
-
+    @PostMapping("/confirm-booking")
+    public ResponseEntity<?> confirmBooking(@RequestBody ConfirmBookingDto confirmDto, Authentication authentication) {
+        try {
+            bookingService.confirmBooking(confirmDto, authentication);
+            return ResponseEntity.ok("Booking confirmed and saved.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
 //
