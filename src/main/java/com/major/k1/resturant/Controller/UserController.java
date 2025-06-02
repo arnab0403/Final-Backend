@@ -3,6 +3,7 @@ package com.major.k1.resturant.Controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.major.k1.resturant.DTO.*;
 import com.major.k1.resturant.Entites.Booking;
+import com.major.k1.resturant.Entites.FeedBack;
 import com.major.k1.resturant.Entites.User;
 import com.major.k1.resturant.Repository.UserRepository;
 import com.major.k1.resturant.Security.JwtUtil;
@@ -134,8 +135,16 @@ public class UserController {
     }
 
 
-
-
+@PostMapping("/feedback")
+public ResponseEntity<String> feedBack(@RequestBody FeedBackDTO feedBack , Authentication authentication){
+    String username = authentication.getName();
+    User user=userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("not found"));
+    Long id=user.getId();
+    String name=user.getName();
+    String email=user.getEmail();
+        String feedback = userService.getfeedBack(id,feedBack,name,email);
+        return ResponseEntity.ok(feedback);
+}
 
 
 

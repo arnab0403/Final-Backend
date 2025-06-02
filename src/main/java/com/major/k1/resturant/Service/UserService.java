@@ -9,10 +9,13 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.major.k1.resturant.DTO.FeedBackDTO;
 import com.major.k1.resturant.DTO.OtpUserStore;
 import com.major.k1.resturant.DTO.PendingUser;
+import com.major.k1.resturant.Entites.FeedBack;
 import com.major.k1.resturant.Entites.User;
 
+import com.major.k1.resturant.Repository.FeedBackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -29,6 +32,8 @@ public class UserService {
 
     @Autowired
     private OtpUserStore otpUserStore;
+    @Autowired
+    private FeedBackRepository feedBackRepository;
 
     public String registerTemp(String userJson, MultipartFile file) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -120,5 +125,11 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(newpassword));
         userRepository.save(user);
         return true;
+    }
+
+    public String getfeedBack(Long uid,FeedBackDTO feedBack,String name,String email){
+        FeedBack feedBack1=new FeedBack(uid,name,email,feedBack.getMessages());
+       feedBackRepository.save(feedBack1);
+       return "done";
     }
 }
