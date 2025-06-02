@@ -82,9 +82,11 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String username=authentication.getName();
         String token = jwtUtil.generateToken(username);
+        User user = userRepository.findByUsername(username).orElse(null);
         return  ResponseEntity.ok(Map.of(
                 "token", token,
-                "message", "Login successful"
+                "message", "Login successful",
+                "role", user.getRoles()
 
         ));
 

@@ -22,6 +22,10 @@ public class SlotDTO {
         this.time = time;
 
     }
+    public SlotDTO(String time , int availableSeats) {
+        this.time = time;
+
+    }
 
     public SlotDTO(String time, boolean available) {
         this.time = time;
@@ -29,27 +33,5 @@ public class SlotDTO {
     }
 
     // Getters and setters
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
 }

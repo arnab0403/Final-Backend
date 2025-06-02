@@ -2,10 +2,13 @@ package com.major.k1.resturant.Entites;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+
 public class SlotTime {
 
     @Id
@@ -22,5 +25,7 @@ public class SlotTime {
 
     @Column(nullable = false)
     private int availableSeats;
+
+
     // Getters and Setters
 }

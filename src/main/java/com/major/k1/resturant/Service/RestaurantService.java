@@ -154,13 +154,14 @@ public class RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    public Restaurant addSlot(Long restaurantId, String slotTime) {
+    public Restaurant addSlot(Long restaurantId, SlotPush slotPush) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new RuntimeException("Restaurant not found"));
         SlotTime slot = new SlotTime();
-        slot.setTime(slotTime);
+        slot.setTime(slotPush.getTime());
         slot.setAvailable(true);
         slot.setRestaurant(restaurant);
+        slot.setAvailableSeats(slotPush.getAvailableSeats());
         restaurant.getSlotTimes().add(slot);
         return restaurantRepository.save(restaurant);
     }
@@ -213,7 +214,9 @@ public class RestaurantService {
                     menus,  // List of MenuDTOs
                     restaurant.getBestDishes(),
                     restaurant.getCoordinates(),
-                    slotTimes // List of SlotDTOs
+                    slotTimes,
+                    restaurant.getTotalSeats()
+                    // List of SlotDTOs
             );
         }).collect(Collectors.toList()); // Collect the list of RestaurantDTOs
     }
@@ -317,7 +320,8 @@ public class RestaurantService {
                 menus,
                 restaurant.getBestDishes(),
                 restaurant.getCoordinates(),
-                slotDTOs
+                slotDTOs,
+                restaurant.getTotalSeats()
         );
     }
 

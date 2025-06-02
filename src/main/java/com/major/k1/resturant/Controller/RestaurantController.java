@@ -109,8 +109,8 @@ public class RestaurantController {
     // Add time slot
 
     @PostMapping("/{restaurantId}/slot")
-    public ResponseEntity<Restaurant> addSlot(@PathVariable Long restaurantId, @RequestBody String slotTime) {
-        Restaurant restaurant = restaurantService.addSlot(restaurantId, slotTime);
+    public ResponseEntity<Restaurant> addSlot(@PathVariable Long restaurantId, @RequestBody SlotPush slotPush) {
+        Restaurant restaurant = restaurantService.addSlot(restaurantId, slotPush);
         return ResponseEntity.ok(restaurant);
     }
 

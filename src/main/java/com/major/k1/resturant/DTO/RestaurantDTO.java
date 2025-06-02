@@ -20,6 +20,7 @@ public class RestaurantDTO {
     private List<String> bestDishes;
     private Coordinates coordinates;
     private List<SlotDTO> slotTimes;
+    private int totalSeats;
 
 
 
