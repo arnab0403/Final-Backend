@@ -200,6 +200,12 @@ public class RestaurantController {
         return booking;
     }
 
+    @PutMapping("/{restaurantId}/addtotalsetas")
+    public ResponseEntity<String> addTotalSeats(@PathVariable Long restaurantId,@RequestBody int totalseats){
+        String restaurant = restaurantService.addTotalSeats(restaurantId,totalseats);
+        return ResponseEntity.ok(restaurant);
+    }
+
 
 
 

@@ -165,6 +165,13 @@ public class RestaurantService {
         restaurant.getSlotTimes().add(slot);
         return restaurantRepository.save(restaurant);
     }
+    public String addTotalSeats(Long restaurantId, int totalseats){
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new RuntimeException("Restaurant not found"));
+        restaurant.setTotalSeats(totalseats);
+        restaurantRepository.save(restaurant);
+        return "Ok";
+    }
 
     public Restaurant removeSlot(Long restaurantId, String slotTime) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
