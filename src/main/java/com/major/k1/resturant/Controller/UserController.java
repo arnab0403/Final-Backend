@@ -146,6 +146,24 @@ public ResponseEntity<String> feedBack(@RequestBody FeedBackDTO feedBack , Authe
         return ResponseEntity.ok(feedback);
 }
 
+    @PostMapping("/forget")
+    public String tempForgetPassword(@RequestBody ForgetPasswordDTO passwordChangeDTO){
+        String result=userService.tempotp(passwordChangeDTO.getUsername());
+        return result;
+    }
+    @PostMapping("/verify")
+    public ResponseEntity<String> forgetverifyotp(@RequestParam String username,@RequestParam String otp,@RequestParam String newpassword) {
+        boolean result= userService.forgetverifyOtp(username,otp,newpassword);
+        if(result){
+            return ResponseEntity.ok("Success");
+        }
+        else {
+            return ResponseEntity.ok("Failed");
+        }
+
+    }
+
+
 
 
 

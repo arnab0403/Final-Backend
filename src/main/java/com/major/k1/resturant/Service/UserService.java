@@ -9,9 +9,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.major.k1.resturant.DTO.FeedBackDTO;
-import com.major.k1.resturant.DTO.OtpUserStore;
-import com.major.k1.resturant.DTO.PendingUser;
+import com.major.k1.resturant.DTO.*;
 import com.major.k1.resturant.Entites.FeedBack;
 import com.major.k1.resturant.Entites.User;
 
@@ -23,7 +21,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import com.major.k1.resturant.DTO.DtoRegUser;
 
 import com.major.k1.resturant.Repository.UserRepository;
 
@@ -132,4 +129,40 @@ public class UserService {
        feedBackRepository.save(feedBack1);
        return "done";
     }
+    //Forget Password
+    @Autowired
+    OtpStoreForgetPassword otpStoreForgetPassword;
+    public String tempotp(String username ){
+        User user= userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("not found"));
+
+        String otp = String.format("%06d", new Random().nextInt(999999));
+        PendingOTPForget pendingOtp =new PendingOTPForget(username,otp,System.currentTimeMillis());
+        otpStoreForgetPassword.add(username,pendingOtp);
+        sendOtpEmailForget(user.getEmail(), otp);
+        return "otp send successfully";
+
+    }
+    private void sendOtpEmailForget(String toEmail, String otp) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("Your Password Change OTP");
+        message.setText("Your OTP is: " + otp);
+        mailSender.send(message);
+    }
+    public Boolean forgetverifyOtp(String username , String otp ,String newpassword){
+        PendingOTPForget pendingOtp=otpStoreForgetPassword.get(username);
+        if (pendingOtp == null || !pendingOtp.getOtp().equals(otp)) {
+            return false;
+        }
+        else {
+            User user=userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Not found"));
+            user.setPassword(passwordEncoder.encode(newpassword));
+            userRepository.save(user);
+            otpStoreForgetPassword.remove(username);
+            return true;
+        }
+    }
+
+
+
 }

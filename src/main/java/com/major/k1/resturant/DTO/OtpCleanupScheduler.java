@@ -9,11 +9,14 @@ public class OtpCleanupScheduler {
 
     @Autowired
     private OtpUserStore otpUserStore;
+    @Autowired
+    private OtpStoreForgetPassword otpStoreForgetPassword;
 
     @Scheduled(fixedRate = 5 * 60 * 1000)
     public void cleanupExpiredOtps() {
         long otpLifetime = 10 * 60 * 1000; // 10 minutes
         otpUserStore.removeExpiredUsers(otpLifetime);
+        otpStoreForgetPassword.removeExpiredUsers(otpLifetime);
         System.out.println("Expired OTPs cleaned up");
     }
 }
