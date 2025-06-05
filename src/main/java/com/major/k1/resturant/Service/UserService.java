@@ -4,15 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.major.k1.resturant.DTO.*;
+import com.major.k1.resturant.Entites.Booking;
 import com.major.k1.resturant.Entites.FeedBack;
 import com.major.k1.resturant.Entites.User;
 
+import com.major.k1.resturant.Repository.BookingRepository;
 import com.major.k1.resturant.Repository.FeedBackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -162,7 +165,12 @@ public class UserService {
             return true;
         }
     }
-
+    @Autowired
+    private BookingRepository bookingRepository;
+     public List<Booking> userbooking(Long id){
+        List<Booking> bookings=bookingRepository.findByUserId(id);
+        return bookings;
+     }
 
 
 }

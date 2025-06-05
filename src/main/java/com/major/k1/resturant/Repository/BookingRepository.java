@@ -8,4 +8,5 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     // You can add custom query methods here if needed
     List<Booking> findByRestaurantId(Long restaurantId );
+    List<Booking> findByUserId(Long userId);
 }
