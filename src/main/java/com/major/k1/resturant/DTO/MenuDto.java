@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MenuDto {
+    private Long Id;
     private String item;
     private double  price;
 }

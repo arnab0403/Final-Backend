@@ -143,13 +143,13 @@ public class RestaurantService {
        restaurantRepository.save(restaurant);
        return "Successfully Added";
     }
+    @Autowired MenuRepository menuRepository;
 
      // Remove Menu item
-    public Restaurant removeMenuItem(Long restaurantId, String menuItem) {
-        Restaurant restaurant = restaurantRepository.findById(restaurantId)
-                .orElseThrow(() -> new RuntimeException("Restaurant not found"));
-        restaurant.getMenu().remove(menuItem);
-        return restaurantRepository.save(restaurant);
+    public String removeMenuItem( Long id) {
+        Menu menu=menuRepository.findByid(id).orElseThrow(() -> new RuntimeException("menu not found"));;
+        menuRepository.delete(menu);
+        return "successfully deleted the menu";
     }
 
     public Restaurant addSlot(Long restaurantId, SlotPush slotPush) {
@@ -205,7 +205,7 @@ public class RestaurantService {
 
             // Convert Menus to MenuDTOs
             List<MenuDto> menus = restaurant.getMenu().stream()
-                    .map(menu -> new MenuDto(menu.getItem(), menu.getPrice()))
+                    .map(menu -> new MenuDto(menu.getId(), menu.getItem(), menu.getPrice()))
                     .collect(Collectors.toList());
 
             // Convert the Restaurant entity to RestaurantDTO
@@ -243,8 +243,10 @@ public class RestaurantService {
 
         List<MenuDto> menus = restaurant.getMenu().stream()
                 .map(menu -> new MenuDto(
+                        menu.getId(),
                         menu.getItem(),
                         menu.getPrice()
+
                 )).collect(Collectors.toList());
 
         // Build photo URLs (assuming photos are stored with base URL)
@@ -310,6 +312,7 @@ public class RestaurantService {
 
         List<MenuDto> menus = restaurant.getMenu().stream()
                 .map(menu -> new MenuDto(
+                        menu.getId(),
                         menu.getItem(),
                         menu.getPrice()
                 )).collect(Collectors.toList());

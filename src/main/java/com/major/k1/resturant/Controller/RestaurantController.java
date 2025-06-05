@@ -100,9 +100,9 @@ public class RestaurantController {
     }
      //Delete menu from a specific restaurant
 
-    @DeleteMapping("/{restaurantId}/menu/{menuItem}")
-    public ResponseEntity<Restaurant> removeMenuItem(@PathVariable Long restaurantId, @PathVariable String menuItem) {
-        Restaurant restaurant = restaurantService.removeMenuItem(restaurantId, menuItem);
+    @DeleteMapping("/menu/{id}")
+    public ResponseEntity<String> removeMenuItem( @PathVariable Long id) {
+        String restaurant = restaurantService.removeMenuItem(id);
         return ResponseEntity.ok(restaurant);
     }
 
