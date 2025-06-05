@@ -10,4 +10,5 @@ public interface CurrentBookingRepository extends JpaRepository<CurrentBooking, 
 
     void deleteByUserId(Long userId); // optional: to clear current bookings when needed
     List<CurrentBooking> findByRestaurantId(Long restaurantId);
+    void deleteByrestaurantId(Long restaurantId);
 }

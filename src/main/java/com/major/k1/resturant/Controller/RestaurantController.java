@@ -193,7 +193,12 @@ public class RestaurantController {
      return ResponseEntity.ok(bookings);
  }
 
-
+    //Delete Current Booking Of that specific restaurant
+    @DeleteMapping("/current-booking/{restaurantId}")
+    public ResponseEntity<String> deletecurenntbooking(@PathVariable Long restaurantId){
+        String result=restaurantService.deleteCurrentBokking(restaurantId);
+        return ResponseEntity.ok(result);
+    }
 
 
     @GetMapping("bookings/{restaurantId}")

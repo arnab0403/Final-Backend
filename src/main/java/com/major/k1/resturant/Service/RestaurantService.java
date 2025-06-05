@@ -3,10 +3,7 @@ package com.major.k1.resturant.Service;
 
 import com.major.k1.resturant.DTO.*;
 import com.major.k1.resturant.Entites.*;
-import com.major.k1.resturant.Repository.BookingRepository;
-import com.major.k1.resturant.Repository.RestaurantRepository;
-import com.major.k1.resturant.Repository.SlotTimeRepository;
-import com.major.k1.resturant.Repository.UserRepository;
+import com.major.k1.resturant.Repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.aspectj.weaver.patterns.ConcreteCflowPointcut;
@@ -414,6 +411,12 @@ public class RestaurantService {
         List<Booking> booking = bookingRepository.findByRestaurantId(restaurantId);
         return booking;
     }
-
+    @Autowired
+    private CurrentBookingRepository currentBookingRepository;
+    @Transactional
+    public String deleteCurrentBokking(Long restaurantId){
+        currentBookingRepository.deleteByrestaurantId(restaurantId);
+        return "Successfully Deleted The Bookings ";
+    }
 
 }
