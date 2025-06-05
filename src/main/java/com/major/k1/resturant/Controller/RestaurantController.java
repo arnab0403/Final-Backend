@@ -94,8 +94,8 @@ public class RestaurantController {
 
     //Add new menu to a specific restaurant
     @PostMapping("/{restaurantId}/menu")
-    public ResponseEntity<Restaurant> addMenuItem(@PathVariable Long restaurantId, @RequestBody MenuDto menuItem) {
-        Restaurant restaurant = restaurantService.addMenuItem(restaurantId, menuItem);
+    public ResponseEntity<String> addMenuItem(@PathVariable Long restaurantId, @RequestBody MenuDto menuItem) {
+        String restaurant = restaurantService.addMenuItem(restaurantId, menuItem);
         return ResponseEntity.ok(restaurant);
     }
      //Delete menu from a specific restaurant
@@ -192,6 +192,11 @@ public class RestaurantController {
      List<CurrentBooking> bookings = currentBookingRepository.findByRestaurantId(restaurantId);
      return ResponseEntity.ok(bookings);
  }
+
+ //Delete Current Booking Of that specific restaurant
+    public ResponseEntity<String> deletecurenntbooking(@PathVariable Long restaurantId){
+
+    }
 
 
     @GetMapping("bookings/{restaurantId}")

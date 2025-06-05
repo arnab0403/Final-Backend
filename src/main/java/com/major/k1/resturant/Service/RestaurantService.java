@@ -131,7 +131,7 @@ public class RestaurantService {
 
 
          // Menu  add method
-    public Restaurant addMenuItem(Long restaurantId, MenuDto menuDto) {
+    public String addMenuItem(Long restaurantId, MenuDto menuDto) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new RuntimeException("Restaurant not found"));
         // Convert DTO to entity
@@ -143,7 +143,8 @@ public class RestaurantService {
         // Add to restaurant's menu list
         restaurant.getMenu().add(menuItem);
 
-        return restaurantRepository.save(restaurant);
+       restaurantRepository.save(restaurant);
+       return "Successfully Added";
     }
 
      // Remove Menu item
