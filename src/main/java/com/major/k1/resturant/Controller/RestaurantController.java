@@ -94,7 +94,7 @@ public class RestaurantController {
 
     //Add new menu to a specific restaurant
     @PostMapping("/{restaurantId}/menu")
-    public ResponseEntity<String> addMenuItem(@PathVariable Long restaurantId, @RequestBody MenuDto menuItem) {
+    public ResponseEntity<String> addMenuItem(@PathVariable Long restaurantId, @RequestBody MenuAddDTO menuItem) {
         String restaurant = restaurantService.addMenuItem(restaurantId, menuItem);
         return ResponseEntity.ok(restaurant);
     }

@@ -128,7 +128,7 @@ public class RestaurantService {
 
 
          // Menu  add method
-    public String addMenuItem(Long restaurantId, MenuDto menuDto) {
+    public String addMenuItem(Long restaurantId, MenuAddDTO menuDto) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new RuntimeException("Restaurant not found"));
         // Convert DTO to entity
