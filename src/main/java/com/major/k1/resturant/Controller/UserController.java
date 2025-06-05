@@ -166,11 +166,12 @@ public ResponseEntity<String> feedBack(@RequestBody FeedBackDTO feedBack , Authe
     //Booking of particular user
 
  @GetMapping("/userbooking")
-    public List<Booking> userbooking(Authentication authentication){
+    public List<UserBookingDetailsDTO> userbooking(Authentication authentication){
         String username=authentication.getName();
         User user=userRepository.findByUsername(username).orElseThrow(()-> new RuntimeException("not found"));
         Long id=user.getId();
-        List<Booking> booking=userService.userbooking(id);
+        List<UserBookingDetailsDTO> booking=userService.userbooking(id);
+
         return booking;
  }
 

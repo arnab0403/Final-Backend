@@ -7,16 +7,19 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.major.k1.resturant.DTO.*;
 import com.major.k1.resturant.Entites.Booking;
 import com.major.k1.resturant.Entites.FeedBack;
+import com.major.k1.resturant.Entites.Restaurant;
 import com.major.k1.resturant.Entites.User;
 
 import com.major.k1.resturant.Repository.BookingRepository;
 import com.major.k1.resturant.Repository.FeedBackRepository;
+import com.major.k1.resturant.Repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -167,9 +170,24 @@ public class UserService {
     }
     @Autowired
     private BookingRepository bookingRepository;
-     public List<Booking> userbooking(Long id){
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+     public List<UserBookingDetailsDTO> userbooking(Long id){
         List<Booking> bookings=bookingRepository.findByUserId(id);
-        return bookings;
+        return bookings.stream().map(booking -> {
+            Long rid=booking.getRestaurantId();
+            Restaurant restaurant=restaurantRepository.findById(rid).orElseThrow(() -> new RuntimeException("not found"));
+            String name=restaurant.getName();
+            String location=restaurant.getPlace();
+            return new UserBookingDetailsDTO(
+                    name,
+                    booking.getAmount(),
+                    booking.getSeats(),
+                    location,
+                    booking.getBookingTime()
+
+            );
+        }).collect(Collectors.toList());
      }
 
 
