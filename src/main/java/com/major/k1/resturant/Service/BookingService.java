@@ -71,7 +71,7 @@ public class BookingService {
             throw new RuntimeException("Not enough seats available at this time.");
         }
 
-        int amountInPaise = 200 * requestDto.getNumberOfSeats() * 100;
+        int amountInPaise = 100 * 100;
 
         // Creating Razorpay order
         JSONObject orderRequest = new JSONObject();
